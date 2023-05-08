@@ -1,22 +1,27 @@
 const video = document.getElementById("video");
+const loading = document.getElementById("loading");
 
+video.style.display = "none";
 Promise.all([
-  faceapi.nets.ssdMobilenetv1.loadFromUri("/models"),
-  faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
-  faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
+    faceapi.nets.ssdMobilenetv1.loadFromUri("/models"),
+    faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
+    faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
 ]).then(startWebcam);
 
+
 function startWebcam() {
-  navigator.mediaDevices
+navigator.mediaDevices
     .getUserMedia({
-      video: true,
-      audio: false,
+    video: true,
+    audio: false,
     })
     .then((stream) => {
-      video.srcObject = stream;
+    video.style.display = "block";
+    loading.style.display = "none";
+    video.srcObject = stream;
     })
     .catch((error) => {
-      console.error(error);
+    console.error(error);
     });
 }
 
